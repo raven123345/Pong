@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     };
 
     public Player _player;
+    public Color playerColor;
     private RG_Inputs inputActions;
     private InputAction _UpDown;
 

@@ -7,6 +7,11 @@ TagManager:
   - LeftCollider
   - RightCollider
   - Second
+  - Brick
+  - Ball
+  - PlayerOne
+  - PlayerTwo
+  - PlayerComputer
   layers:
   - Default
   - TransparentFX

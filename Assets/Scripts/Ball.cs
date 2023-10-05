@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class Ball : MonoBehaviour
 {
+    [SerializeField]
+    enum OwnerPlayer
+    { PlayerOne, PlayerTwo };
+    [SerializeField]
+    OwnerPlayer owner;
 
     [SerializeField]
     float speed = 200f;
@@ -21,21 +26,15 @@ public class Ball : MonoBehaviour
     private bool gameStop;
     private float levelCounter = 0f;
     private AudioSource _audioSource;
+    private SpriteRenderer spriteRend;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
-
-        float i = Random.Range(-1f, 1f);
-        gameStop = false;
-        if (i <= 0f) { flyDirection = new Vector2(-1f, -1f); }
-        else { flyDirection = new Vector2(1f, -1f); }
-
-        _audioSource.PlayOneShot(sounds[0]);
+        spriteRend = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         flyDirection.Normalize();
@@ -46,7 +45,34 @@ public class Ball : MonoBehaviour
             speed += levelStep;
             levelCounter = 0f;
         }
+    }
 
+    public void ReleaseBall()
+    {
+        float i = Random.Range(-1f, 1f);
+        gameStop = false;
+        switch (owner)
+        {
+            case OwnerPlayer.PlayerOne:
+                {
+                    if (i <= 0f) { flyDirection = new Vector2(1f, -1f); }
+                    else { flyDirection = new Vector2(1f, 1f); }
+
+                    break;
+                }
+            case OwnerPlayer.PlayerTwo:
+                {
+                    if (i <= 0f) { flyDirection = new Vector2(-1f, -1f); }
+                    else { flyDirection = new Vector2(-1f, 1f); }
+
+                    break;
+                }
+        };
+
+
+        gameObject.transform.SetParent(null);
+
+        _audioSource.PlayOneShot(sounds[0]);
     }
 
     private void FixedUpdate()
@@ -67,7 +93,7 @@ public class Ball : MonoBehaviour
         {
             gameStop = true;
             _audioSource.PlayOneShot(sounds[1]);
-            StartCoroutine(countdown());
+            StartCoroutine(reloadLevelCountdown());
             if (collision.transform.tag == "LeftCollider")
             {
                 GameManager.secondPlayerScore++;
@@ -79,10 +105,13 @@ public class Ball : MonoBehaviour
                 GameManager.instance.changeScore.Invoke();
             }
         }
-
+        if (collision.transform.tag == "PlayerOne" || collision.transform.tag == "PlayerTwo" || collision.transform.tag == "PlayerComputer")
+        {
+            spriteRend.color = collision.gameObject.GetComponent<PlayerController>().playerColor;
+        }
     }
 
-    IEnumerator countdown()
+    IEnumerator reloadLevelCountdown()
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
