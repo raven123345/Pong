@@ -99,8 +99,6 @@ public class PlayerController : MonoBehaviour
                 initialPosition = transform.position;
                 break;
         }
-
-
     }
 
     // Update is called once per frame

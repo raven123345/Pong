@@ -12,7 +12,7 @@ public class Brick : MonoBehaviour
     float timeBeforDie = 1f;
     [SerializeField]
     Color hitColor;
-    
+
 
     Color initColor;
 
@@ -44,7 +44,7 @@ public class Brick : MonoBehaviour
     IEnumerator DieCountDown()
     {
         yield return new WaitForSeconds(timeBeforDie);
-        // GameManager.instance.ChangeScore(points);
+        GameManager.instance.AddScorePoints(1, points);
         Destroy(gameObject);
     }
 }

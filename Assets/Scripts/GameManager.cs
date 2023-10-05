@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent changeScore;
     public List<PlayerController> players = new List<PlayerController>();
 
+    public Transform firstPlayerBallPosition;
+    public Transform secondPlayerBallPosition;
+
     private RG_Inputs inputs;
     private InputAction quitToTitle;
     private void Awake()
@@ -30,7 +33,6 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-
         ChangeScore();
     }
 
@@ -45,6 +47,19 @@ public class GameManager : MonoBehaviour
     {
         if (score)
             score.text = firstPlayerScore.ToString() + "   " + secondPlayerScore.ToString();
+    }
+
+    public void AddScorePoints(int player, int points)
+    {
+        if (player == 1)
+        {
+            firstPlayerScore += points;
+        }
+        else if (player == 2)
+        {
+            secondPlayerScore += points;
+        }
+        ChangeScore();
     }
 
     public void TwoPlayers()
