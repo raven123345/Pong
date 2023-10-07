@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
@@ -12,6 +13,8 @@ public class Brick : MonoBehaviour
     float timeBeforDie = 1f;
     [SerializeField]
     Color hitColor;
+    [SerializeField]
+    GameObject[] bonusObjects;
 
 
     Color initColor;
@@ -32,7 +35,20 @@ public class Brick : MonoBehaviour
             StartCoroutine(HitCountDown());
 
             if (hitNumbers <= 0)
-                StartCoroutine(DieCountDown());
+            {
+                int whoToGive = 0;
+
+                switch (collision.gameObject.GetComponent<Ball>().owner)
+                {
+                    case Ball.OwnerPlayer.PlayerOne:
+                        whoToGive = 1;
+                        break;
+                    case Ball.OwnerPlayer.PlayerTwo:
+                        whoToGive = 2;
+                        break;
+                }
+                StartCoroutine(DieCountDown(whoToGive));
+            }
         }
     }
 
@@ -41,10 +57,14 @@ public class Brick : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         sr.color = initColor;
     }
-    IEnumerator DieCountDown()
+    IEnumerator DieCountDown(int whoToGiveBonus)
     {
         yield return new WaitForSeconds(timeBeforDie);
         GameManager.instance.AddScorePoints(1, points);
+
+        var bonus = Instantiate(bonusObjects[Random.Range(0, bonusObjects.Length)]);
+        bonus.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = whoToGiveBonus;
+
         Destroy(gameObject);
     }
 }

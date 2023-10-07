@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField]
-    enum OwnerPlayer
+    public enum OwnerPlayer
     { PlayerOne, PlayerTwo };
-    [SerializeField]
-    OwnerPlayer owner;
+
+    public OwnerPlayer owner;
 
     [SerializeField]
     float speed = 200f;
