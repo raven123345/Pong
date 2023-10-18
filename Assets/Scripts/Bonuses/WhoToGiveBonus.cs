@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class WhoToGiveBonus : MonoBehaviour
 {
-
-    internal int _whotoGiveBonus;
+        internal int _whotoGiveBonus;
 }

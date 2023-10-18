@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
@@ -8,11 +9,15 @@ public class Brick : MonoBehaviour
     [SerializeField]
     int hitNumbers = 1;
     [SerializeField]
-    int points = 1;
+    int brickPoints = 1;
     [SerializeField]
     float timeBeforDie = 1f;
     [SerializeField]
     Color hitColor;
+    [SerializeField]
+    int chanseToGiveBonus = 20;
+    [SerializeField]
+    GameObject pointsObject;
     [SerializeField]
     GameObject[] bonusObjects;
 
@@ -36,18 +41,7 @@ public class Brick : MonoBehaviour
 
             if (hitNumbers <= 0)
             {
-                int whoToGive = 0;
-
-                switch (collision.gameObject.GetComponent<Ball>().owner)
-                {
-                    case Ball.OwnerPlayer.PlayerOne:
-                        whoToGive = 1;
-                        break;
-                    case Ball.OwnerPlayer.PlayerTwo:
-                        whoToGive = 2;
-                        break;
-                }
-                StartCoroutine(DieCountDown(whoToGive));
+                StartCoroutine(DieCountDown(gameObject.GetComponent<WhoToGiveBonus>()._whotoGiveBonus));
             }
         }
     }
@@ -60,10 +54,19 @@ public class Brick : MonoBehaviour
     IEnumerator DieCountDown(int whoToGiveBonus)
     {
         yield return new WaitForSeconds(timeBeforDie);
-        GameManager.instance.AddScorePoints(1, points);
+        // GameManager.instance.AddScorePoints(whoToGiveBonus, points);
 
-        var bonus = Instantiate(bonusObjects[Random.Range(0, bonusObjects.Length)]);
-        bonus.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = whoToGiveBonus;
+        if (UnityEngine.Random.Range(0, 101) <= chanseToGiveBonus)
+        {
+            var bonus = Instantiate(bonusObjects[UnityEngine.Random.Range(0, bonusObjects.Length)], transform.position, quaternion.identity);
+            bonus.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = whoToGiveBonus;
+        }
+        else//no bonus, give points
+        {
+            var points = Instantiate(pointsObject, transform.position, quaternion.identity);
+            points.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = whoToGiveBonus;
+            points.GetComponent<Bonus_GivePoints>().pointsToGive = brickPoints;
+        }
 
         Destroy(gameObject);
     }

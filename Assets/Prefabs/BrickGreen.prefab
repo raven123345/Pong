@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2557737097590086990}
   - component: {fileID: 3760237853645290756}
   - component: {fileID: 543552844}
+  - component: {fileID: 6557198709920423040}
   m_Layer: 0
   m_Name: BrickGreen
   m_TagString: Brick
@@ -144,6 +145,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitNumbers: 1
-  points: 1
+  brickPoints: 1
   timeBeforDie: 0.1
   hitColor: {r: 1, g: 1, b: 1, a: 1}
+  chanseToGiveBonus: 20
+  pointsObject: {fileID: 1526603019715985903, guid: cdc5b8a47b5e45f3e982ea71e1fa0c2e, type: 3}
+  bonusObjects:
+  - {fileID: 1526603019715985903, guid: b9949f66747d28c5fae58a83a4f3fe55, type: 3}
+--- !u!114 &6557198709920423040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557737097590086991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7b1d8695aac5b10bc9bc592854e09c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -161,6 +161,19 @@ public class Ball : MonoBehaviour
                     }
             }
         }
+
+        if (collision.transform.CompareTag("Brick"))
+        {
+            switch (owner)
+            {
+                case OwnerPlayer.PlayerOne:
+                    collision.gameObject.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = 1;
+                    break;
+                case OwnerPlayer.PlayerTwo:
+                    collision.gameObject.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = 2;
+                    break;
+            }
+        }
     }
 
     IEnumerator reloadLevelCountdown()

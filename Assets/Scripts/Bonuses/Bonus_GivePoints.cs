@@ -7,26 +7,32 @@ public class Bonus_GivePoints : MonoBehaviour
 {
     [SerializeField]
     WhoToGiveBonus whoToGiveBonus;
-    [SerializeField]
-    int pointsToGive = 2;
+    
+    public int pointsToGive = 2;
     [SerializeField]
     TMP_Text text;
     void Start()
     {
         text.text = pointsToGive.ToString();
-
-        switch (whoToGiveBonus._whotoGiveBonus)
-        {
-            case 1:
-                GameManager.firstPlayerScore += pointsToGive;
-                break;
-            case 2:
-                GameManager.secondPlayerScore += pointsToGive;
-                break;
-        }
     }
     public void DestroyObject()
     {
         Destroy(gameObject);
+    }
+
+    public void GivePoints()
+    {
+        switch (whoToGiveBonus._whotoGiveBonus)
+        {
+            case 1:
+                GameManager.instance.AddScorePoints(1, pointsToGive);
+
+                break;
+            case 2:
+                GameManager.instance.AddScorePoints(2, pointsToGive);
+                break;
+        }
+
+        DestroyObject();
     }
 }
