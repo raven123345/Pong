@@ -18,8 +18,10 @@ public class Brick : MonoBehaviour
     int chanseToGiveBonus = 20;
     [SerializeField]
     GameObject pointsObject;
+    // [SerializeField]
+    // GameObject[] bonusObjects;
     [SerializeField]
-    GameObject[] bonusObjects;
+    Bonuses bonuses;
 
 
     Color initColor;
@@ -58,7 +60,7 @@ public class Brick : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 101) <= chanseToGiveBonus)
         {
-            var bonus = Instantiate(bonusObjects[UnityEngine.Random.Range(0, bonusObjects.Length)], transform.position, quaternion.identity);
+            var bonus = Instantiate(bonuses.bonusPrefab[UnityEngine.Random.Range(0, bonuses.bonusPrefab.Length)], transform.position, quaternion.identity);
             bonus.GetComponent<WhoToGiveBonus>()._whotoGiveBonus = whoToGiveBonus;
         }
         else//no bonus, give points

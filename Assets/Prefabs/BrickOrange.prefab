@@ -150,8 +150,7 @@ MonoBehaviour:
   hitColor: {r: 1, g: 1, b: 1, a: 1}
   chanseToGiveBonus: 20
   pointsObject: {fileID: 1526603019715985903, guid: cdc5b8a47b5e45f3e982ea71e1fa0c2e, type: 3}
-  bonusObjects:
-  - {fileID: 1526603019715985903, guid: b9949f66747d28c5fae58a83a4f3fe55, type: 3}
+  bonuses: {fileID: 11400000, guid: c70fb4ff4d621bb77961ed8976631789, type: 2}
 --- !u!114 &-7541416484497673030
 MonoBehaviour:
   m_ObjectHideFlags: 0

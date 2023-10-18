@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b735a7da3c079d494504c1f3789f26, type: 3}
   m_Name: Bonus
   m_EditorClassIdentifier: 
+  bonusPrefab:
+  - {fileID: 1526603019715985903, guid: b9949f66747d28c5fae58a83a4f3fe55, type: 3}
